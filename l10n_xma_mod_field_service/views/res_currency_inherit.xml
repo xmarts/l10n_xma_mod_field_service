@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="inherit_view_id_inherit_sale_order" model="ir.ui.view">
+            <field name="name">sale.order.view.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <button name="action_confirm" position="attributes">
+                    <attribute name="confirm">"Si el producto tiene cantidad 0 se crear un ticket automaticamente y no podra continuar con el proceso de ventas"</attribute>
+                </button>
+                
+                <field name="payment_term_id" position="before">
+                    <field name="boolean_tkt" string="Tiene Seguro?"/>
+                </field>
+                
+            </field>
+        </record>
+
+        <record id="inherit_view_id_inherit_helpdesk_ticket" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.view.form.inherit</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+                <field name="email_cc" position="after">
+                    <field name="ref_sale" string="Volver a la venta" widget="sale_order_many2one" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>
