@@ -9,28 +9,52 @@ from odoo.fields import Command
 from odoo.osv import expression
 from odoo.tools import float_is_zero, format_amount, format_date, html_keep_url, is_html_empty
 from odoo.tools.sql import create_index
-
+import logging
 from odoo.addons.payment import utils as payment_utils
 
+from datetime import datetime
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+
+_logger = logging.getLogger(__name__)
 
 class helpdeskTicket(models.Model):
     _inherit = "helpdesk.ticket"
     
-    @api.onchange('user_id')
+    @api.onchange('team_id')
     def create_ticket(self):
-        if self.team_id.id == 6:
-            self.env['project.task'].create({
-                                            'name': '{}'.format(self.name),
-                                            #'team_id': 1,
-                                            #'priority': '3',
-                                            'partner_id': self.partner_id.id,
-                                            #'partner_name': self.partner_id.name,
-                                            #'partner_email': self.partner_id.email,
-                                            #'partner_phone': self.partner_id.phone,
-                                            #'ref_sale': self.id,
-                                            })
+        _logger.info("////////////////XXXXXXXXXXXXXXXXXXXXXX\\\\\\\\\\\\\\\\\\\ %s!"  % ('i'))
+        #if self.team_id.id == 1:
+        self.action_convert_to_task()
     
-#class helpdeskTic(models.Model):
-   # _inherit = "helpdesk.ticket"
+class ProjectTask(models.Model):
+    _inherit = "project.task"
     
-    #ref_sale = fields.Many2one('sale.order')
+    date_ahora = fields.Datetime()
+    user_id = fields.Many2one('res.users')
+    timeline_ids = fields.One2many('project.task.timeline','timeline_id')
+    
+    @api.onchange('stage_id')
+    def test_mod(self):
+        for a in self:
+            
+            rounding_line_vals = {
+                'timeline_id': a.id,
+                'stage_id': a.project_id.stage_id.id,
+                'Datetime': a.date_ahora,
+                'users_id': a.user_id.id,
+            }
+            a.timeline_ids.create(rounding_line_vals)
+            
+            
+class ProjectTaskTimeline(models.Model):
+    _name = "project.task.timeline"
+    
+    timeline_id = fields.Many2one('project.task')
+    
+    name=fields.Char(groups="project.group_project_stages")
+    stage_id = fields.Many2one('project.project.stage', groups="project.group_project_stages")
+    Datetime = fields.Datetime()
+    users_id = fields.Many2one('res.users')
+    
+    
+    

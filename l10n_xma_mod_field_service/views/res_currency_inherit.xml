@@ -2,31 +2,29 @@
 <odoo>
     <data>
 
-        <record id="inherit_view_id_inherit_sale_order" model="ir.ui.view">
-            <field name="name">sale.order.view.form.inherit</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form"/>
+        <record id="inherit_view_id_inherit_project_task" model="ir.ui.view">
+            <field name="name">project.task.view.form.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
             <field name="arch" type="xml">
-                <button name="action_confirm" position="attributes">
-                    <attribute name="confirm">"Si el producto tiene cantidad 0 se crear un ticket automaticamente y no podra continuar con el proceso de ventas"</attribute>
-                </button>
                 
-                <field name="payment_term_id" position="before">
-                    <field name="boolean_tkt" string="Tiene Seguro?"/>
-                </field>
-                
-            </field>
-        </record>
+                <xpath expr="//field[@name='user_ids']" position="before">
+                      <field name="user_id" string="Asignado"/>
+                    </xpath> 
+            
+                <xpath expr="//page[1]" position="after">
 
-        <record id="inherit_view_id_inherit_helpdesk_ticket" model="ir.ui.view">
-            <field name="name">helpdesk.ticket.view.form.inherit</field>
-            <field name="model">helpdesk.ticket</field>
-            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
-            <field name="arch" type="xml">
-                <field name="email_cc" position="after">
-                    <field name="ref_sale" string="Volver a la venta" widget="sale_order_many2one" readonly="1"/>
-                </field>
-            </field>
+                    <page string="Cambios de Etapas">
+                        <field name="timeline_ids" mode="tree" context="{'timeline_id': id}">
+                            <tree string="" default_order="sequence, id">
+                                <field name="stage_id"/>
+                                <field name="Datetime"/>
+                                <field name="users_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field> 
         </record>
 
     </data>

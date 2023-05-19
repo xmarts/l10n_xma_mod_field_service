@@ -15,8 +15,8 @@
     'depends': ['base', 'sale','industry_fsm', 'helpdesk'],
 
     'data': [
-       # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         #'views/res_currency_rate_inherit.xml',
-        #'views/res_currency_inherit.xml',
+        'views/res_currency_inherit.xml',
     ],
 }
