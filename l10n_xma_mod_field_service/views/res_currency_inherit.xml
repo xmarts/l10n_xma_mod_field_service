@@ -27,5 +27,28 @@
             </field> 
         </record>
 
+
+        <record id="inherit_view_id_inherit_helpdesk_ticket" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.view.form.inherit</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string="Cambios de Etapas">
+                        <field name="timeline_ids" mode="tree" context="{'timeline_id': id}">
+                            <tree string="" default_order="sequence, id">
+                                <field name="stage_id"/>
+                                <field name="Datetime"/>
+                                <field name="users_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                    </notebook>
+                    
+                </xpath>
+            </field> 
+        </record>
+
     </data>
 </odoo>

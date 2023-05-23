@@ -20,6 +20,20 @@ _logger = logging.getLogger(__name__)
 class helpdeskTicket(models.Model):
     _inherit = "helpdesk.ticket"
     
+    timeline_ids = fields.One2many('helpdesk.timeline','timeline_id')
+    
+    @api.onchange('stage_id')
+    def test_mod(self):
+        for a in self:
+            
+            rounding_line_vals = {
+                'timeline_id': a.id,
+                'stage_id': a.stage_id.id,
+                #'Datetime': a.date_ahora,
+                'users_id': a.user_id.id,
+            }
+            a.timeline_ids.create(rounding_line_vals)
+    
     def action_generate_fsm_task(self):
         self.ensure_one()
         return {
@@ -107,6 +121,16 @@ class ProjectTaskTimeline(models.Model):
     
     name=fields.Char(groups="project.group_project_stages")
     stage_id = fields.Many2one('project.project.stage', groups="project.group_project_stages")
+    Datetime = fields.Datetime()
+    users_id = fields.Many2one('res.users')
+    
+class helpdeskTimeline(models.Model):
+    _name = "helpdesk.timeline"
+    
+    timeline_id = fields.Many2one('helpdesk.ticket')
+    
+    name=fields.Char(groups="project.group_project_stages")
+    stage_id = fields.Many2one('helpdesk.stage')
     Datetime = fields.Datetime()
     users_id = fields.Many2one('res.users')
     
