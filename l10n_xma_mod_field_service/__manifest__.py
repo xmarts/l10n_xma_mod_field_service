@@ -12,7 +12,7 @@
     'category': 'Accounting',
     'version': '1.0.0',
 
-    'depends': ['base', 'sale','industry_fsm', 'helpdesk'],
+    'depends': ['base', 'sale','industry_fsm', 'helpdesk','project'],
 
     'data': [
         'security/ir.model.access.csv',

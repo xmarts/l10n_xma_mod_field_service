@@ -17,83 +17,9 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 _logger = logging.getLogger(__name__)
 
-class helpdeskTicket(models.Model):
-    _inherit = "helpdesk.ticket"
+
     
-    timeline_ids = fields.One2many('helpdesk.timeline','timeline_id')
-    
-    @api.onchange('stage_id')
-    def test_mod(self):
-        for a in self:
-            
-            rounding_line_vals = {
-                'timeline_id': a.id,
-                'stage_id': a.stage_id.id,
-                #'Datetime': a.date_ahora,
-                'users_id': a.user_id.id,
-            }
-            a.timeline_ids.create(rounding_line_vals)
-    
-    def action_generate_fsm_task(self):
-        self.ensure_one()
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Create a Field Service task'),
-            'res_model': 'helpdesk.create.fsm.task',
-            'view_mode': 'form',
-            'target': 'new',
-            'context': {
-                'use_fsm': True,
-                'default_helpdesk_ticket_id': self.id,
-                'default_user_id': False,
-                'default_partner_id': self.partner_id.id if self.partner_id else False,
-                'default_name': self.name,
-                'default_project_id': self.team_id.fsm_project_id.id,
-                'default_dpi': self.x_studio_dpi,
-                'default_telefono': self.x_studio_telfono,
-                'default_telefono2': self.x_studio_tel_2,
-                'default_monto': self.x_studio_monto,
-                'default_dir_despacho': self.x_studio_direccin_de_despacho,
-                'default_quien_recibe': self.x_studio_nombre_de_quien_recibe,
-                'default_observaciones': self.x_studio_observaciones_generales_para_entrega,
-                'default_fecha_entrega': self.x_studio_fecha_solicitada_de_entrega,
-            }
-        }
-    
-    
-class CreateTask(models.TransientModel):
-    _inherit = "helpdesk.create.fsm.task"   
-    
-    dpi = fields.Char()
-    telefono = fields.Char()
-    telefono2 = fields.Char()
-    #forma_pago
-    monto = fields.Float()
-    dir_despacho = fields.Char()
-    quien_recibe = fields.Char()
-    observaciones = fields.Char()
-    #asignado
-    fecha_entrega= fields.Date()
-    
-    
-    def _generate_task_values(self):
-        self.ensure_one()
-        return {
-            'name': self.name,
-            'helpdesk_ticket_id': self.helpdesk_ticket_id.id,
-            'project_id': self.project_id.id,
-            'partner_id': self.partner_id.id,
-            'description': self.helpdesk_ticket_id.description,
-            'x_studio_dpi': self.dpi,
-            'partner_phone': self.telefono,
-            'x_studio_telefono_2': self.telefono2,
-            'x_studio_monto': self.monto,
-            'x_studio_direccin_de_despacho': self.dir_despacho,
-            'x_studio_nombre_de_quien_recibe': self.quien_recibe,
-            'x_studio_observaciones_generales_para_entrega': self.observaciones,
-            'x_studio_fecha_solicitada_de_entrega': self.fecha_entrega,
-        }
-        
+
 class ProjectTask(models.Model):
     _inherit = "project.task"
     
@@ -103,15 +29,19 @@ class ProjectTask(models.Model):
     
     @api.onchange('stage_id')
     def test_mod(self):
+        test = 0
         for a in self:
-            
+            test = a._origin.id
+            active_id =  self.env.context.get('active_id')
+            _logger.debug('//////////////////////////////////Create')
             rounding_line_vals = {
-                'timeline_id': a.id,
+                'timeline_id_b': a._origin.id,
                 'stage_id': a.project_id.stage_id.id,
-                'Datetime': a.date_ahora,
+                #'Datetime': a.date_ahora,
                 'users_id': a.user_id.id,
             }
-            a.timeline_ids.create(rounding_line_vals)
+        
+        self.timeline_ids.create(rounding_line_vals)
             
             
 class ProjectTaskTimeline(models.Model):
@@ -119,20 +49,14 @@ class ProjectTaskTimeline(models.Model):
     
     timeline_id = fields.Many2one('project.task')
     
-    name=fields.Char(groups="project.group_project_stages")
+    timeline_id_b = fields.Many2one('project.task')
+    
+    name=fields.Char()
     stage_id = fields.Many2one('project.project.stage', groups="project.group_project_stages")
     Datetime = fields.Datetime()
     users_id = fields.Many2one('res.users')
     
-class helpdeskTimeline(models.Model):
-    _name = "helpdesk.timeline"
-    
-    timeline_id = fields.Many2one('helpdesk.ticket')
-    
-    name=fields.Char(groups="project.group_project_stages")
-    stage_id = fields.Many2one('helpdesk.stage')
-    Datetime = fields.Datetime()
-    users_id = fields.Many2one('res.users')
+
     
     
     

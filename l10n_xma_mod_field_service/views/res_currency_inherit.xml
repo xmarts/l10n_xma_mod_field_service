@@ -15,7 +15,7 @@
                 <xpath expr="//page[1]" position="after">
 
                     <page string="Cambios de Etapas">
-                        <field name="timeline_ids" mode="tree" context="{'timeline_id': id}">
+                        <field name="timeline_ids" mode="tree" context="{'timeline_id_b': id}">
                             <tree string="" default_order="sequence, id">
                                 <field name="stage_id"/>
                                 <field name="Datetime"/>
@@ -36,7 +36,7 @@
                 <xpath expr="//sheet" position="inside">
                     <notebook>
                         <page string="Cambios de Etapas">
-                        <field name="timeline_ids" mode="tree" context="{'timeline_id': id}">
+                        <field name="timeline_ids" mode="tree" context="{'timeline_id_b': id}">
                             <tree string="" default_order="sequence, id">
                                 <field name="stage_id"/>
                                 <field name="Datetime"/>

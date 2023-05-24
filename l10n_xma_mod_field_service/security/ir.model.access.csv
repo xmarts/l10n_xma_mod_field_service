@@ -1,3 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_project_task_timeline,access_project.task.timeline,model_project_task_timeline,project.group_project_manager,1,1,1,1
-access_helpdesk_timeline,access_helpdesk.timeline,model_helpdesk_timeline,project.group_project_manager,1,1,1,1
+access_helpdesk_timeline_mod,access_helpdesk.timeline.mod,model_helpdesk_timeline_mod,base.group_user,1,1,1,1
