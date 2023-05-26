@@ -65,7 +65,8 @@ class helpdeskTicket(models.Model):
                 'default_quien_recibe': self.x_studio_nombre_de_quien_recibe,
                 'default_observaciones': self.x_studio_observaciones_generales_para_entrega,
                 'default_fecha_entrega': self.x_studio_fecha_solicitada_de_entrega,
-                'default_forma_pago':self.x_studio_forma_de_pago_1
+                #'default_forma_pago':self.x_studio_forma_de_pago_1,
+                'default_asignado':self.x_studio_asignado_para_hoy
             }
         }
         
@@ -80,7 +81,10 @@ class CreateTask(models.TransientModel):
     dir_despacho = fields.Char()
     quien_recibe = fields.Char()
     observaciones = fields.Char()
-    #asignado
+    asignado = fields.Selection([
+                                ('Si', 'Si'),
+                                ('No', 'No'),
+                                ])
     fecha_entrega= fields.Date()
     
     
@@ -101,6 +105,7 @@ class CreateTask(models.TransientModel):
             'x_studio_observaciones_generales_para_entrega': self.observaciones,
             'x_studio_fecha_solicitada_de_entrega': self.fecha_entrega,
             'x_studio_forma_de_pago': self.forma_pago,
+            'x_studio_asignado_para_hoy_1': self.asignado,
         }
         
     
