@@ -20,7 +20,7 @@ _logger = logging.getLogger(__name__)
 class helpdeskTicket(models.Model):
     _inherit = "helpdesk.ticket"
     
-    timeline_ids = fields.One2many('helpdesk.timeline.mod','timeline_id')
+    timeline_help_ids = fields.One2many('helpdesk.timeline.mod','timeline_help_id')
     
     @api.onchange('stage_id')
     def test_mod_help(self):
@@ -34,12 +34,12 @@ class helpdeskTicket(models.Model):
             _logger.info('//////////////////////////////////Create %s', self._origin.id)
             active_id =  self.env.context.get('active_id')
             vals_list = {
-                'timeline_id_b': a._origin.id,
+                'timeline_help_id': self._origin.id,
                 'stage_id': a.stage_id.id,
                 #'Datetime': a.date_ahora,
                 'users_id': a.user_id.id,
             }
-        self.timeline_ids.create(vals_list)
+        self.timeline_help_ids.create(vals_list)
     
     def action_generate_fsm_task(self):
         self.ensure_one()
@@ -106,7 +106,7 @@ class CreateTask(models.TransientModel):
 class helpdeskTimeline(models.Model):
     _name = "helpdesk.timeline.mod"
     
-    timeline_id = fields.Many2one('helpdesk.ticket')
+    timeline_help_id = fields.Many2one('helpdesk.ticket')
     timeline_id_b = fields.Many2one('helpdesk.ticket')
     name=fields.Char()
     stage_id = fields.Many2one('helpdesk.stage')
