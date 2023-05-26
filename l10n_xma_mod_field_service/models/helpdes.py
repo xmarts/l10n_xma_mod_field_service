@@ -36,8 +36,9 @@ class helpdeskTicket(models.Model):
             vals_list = {
                 'timeline_help_id': self._origin.id,
                 'stage_id': a.stage_id.id,
-                #'Datetime': a.date_ahora,
+                'create_uid': a.create_uid.id,
                 'users_id': a.user_id.id,
+                'team_id':a.team_id.id,
             }
         self.timeline_help_ids.create(vals_list)
     
@@ -112,3 +113,5 @@ class helpdeskTimeline(models.Model):
     stage_id = fields.Many2one('helpdesk.stage')
     Datetime = fields.Datetime()
     users_id = fields.Many2one('res.users')
+    create_uid = fields.Many2one('res.users')
+    team_id = fields.Many2one('helpdesk.team')

@@ -47,6 +47,8 @@ class ProjectTaskTimeline(models.Model):
     stage_id = fields.Many2one('project.project.stage', groups="project.group_project_stages")
     Datetime = fields.Datetime()
     users_id = fields.Many2one('res.users')
+    create_uid = fields.Many2one('res.users')
+    
     
 
     

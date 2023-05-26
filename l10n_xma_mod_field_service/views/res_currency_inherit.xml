@@ -41,6 +41,8 @@
                                 <field name="stage_id"/>
                                 <field name="write_date"/>
                                 <field name="users_id"/>
+                                <field name="team_id"/>
+                                <field name="create_uid"/>
                             </tree>
                         </field>
                     </page>
