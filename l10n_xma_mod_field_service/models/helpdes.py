@@ -26,7 +26,7 @@ class helpdeskTicket(models.Model):
     def test_mod_help(self):
         _logger.info('//////////////////////////////////Create')
         self._create_helptime()
-        
+    
     def _create_helptime(self):
         vals_list = {}
         for a in self:
@@ -39,8 +39,37 @@ class helpdeskTicket(models.Model):
                 'create_uid': a.create_uid.id,
                 'users_id': a.user_id.id,
                 'team_id':a.team_id.id,
+                'dpi': self.x_studio_dpi,
+                'telefono': self.x_studio_telfono,
+                'telefono2': self.x_studio_tel_2,
+                'monto': self.x_studio_monto,
+                'dir_despacho': self.x_studio_direccin_de_despacho,
+                'quien_recibe': self.x_studio_nombre_de_quien_recibe,
+                'observaciones': self.x_studio_observaciones_generales_para_entrega,
+                'fecha_entrega': self.x_studio_fecha_solicitada_de_entrega,
+                #'forma_pago':self.x_studio_forma_de_pago_1,
+                'asignado':self.x_studio_asignado_para_hoy
             }
         self.timeline_help_ids.create(vals_list)
+    
+    def open_view_detail_helptime(self):
+        return {
+            'name': f"""Detalles""",
+            'res_model': 'helpdesk.timeline.mod',
+            'view_mode': 'tree,form',
+            'target': 'current',
+            # 'view_id': False,
+            'view_id': self.env.ref('l10n_xma_mod_field_service.helpdesk_timeline_mod_tree').id,
+            'views': [
+                (self.env.ref('l10n_xma_mod_field_service.helpdesk_timeline_mod_tree').id, 'tree'),
+               # (self.env.ref('treasury.treasury_lines_form').id, 'form'),
+            ],
+            'type': 'ir.actions.act_window',
+            'domain': [('id', 'in', [lines.id for lines in self.timeline_help_ids])],
+            'context': {
+                'group_by': ['stage_id']
+            }
+        }
     
     def action_generate_fsm_task(self):
         self.ensure_one()
@@ -65,7 +94,7 @@ class helpdeskTicket(models.Model):
                 'default_quien_recibe': self.x_studio_nombre_de_quien_recibe,
                 'default_observaciones': self.x_studio_observaciones_generales_para_entrega,
                 'default_fecha_entrega': self.x_studio_fecha_solicitada_de_entrega,
-                #'default_forma_pago':self.x_studio_forma_de_pago_1,
+                'default_forma_pago':self.x_studio_forma_de_pago_1,
                 'default_asignado':self.x_studio_asignado_para_hoy
             }
         }
@@ -120,3 +149,16 @@ class helpdeskTimeline(models.Model):
     users_id = fields.Many2one('res.users')
     create_uid = fields.Many2one('res.users')
     team_id = fields.Many2one('helpdesk.team')
+    dpi = fields.Char()
+    telefono = fields.Char()
+    telefono2 = fields.Char()
+    forma_pago = fields.Char()
+    monto = fields.Float()
+    dir_despacho = fields.Char()
+    quien_recibe = fields.Char()
+    observaciones = fields.Char()
+    asignado = fields.Selection([
+                                ('Si', 'Si'),
+                                ('No', 'No'),
+                                ])
+    fecha_entrega= fields.Date()
