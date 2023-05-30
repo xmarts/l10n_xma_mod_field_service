@@ -78,5 +78,20 @@
             </field>
         </record>
 
+        <record id="act_tree_timeline" model="ir.actions.act_window">
+            <field name="name">helpdesk timeline</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">helpdesk.timeline.mod</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem
+                id="action_open_report_tree_timeline"
+                parent="helpdesk.helpdesk_ticket_report_menu_main"
+                action="act_tree_timeline"
+                name="hepldesk timeline"
+                sequence="95"
+        />
+
     </data>
 </odoo>
