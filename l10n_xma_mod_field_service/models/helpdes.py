@@ -95,7 +95,8 @@ class helpdeskTicket(models.Model):
                 'default_observaciones': self.x_studio_observaciones_generales_para_entrega,
                 'default_fecha_entrega': self.x_studio_fecha_solicitada_de_entrega,
                 'default_forma_pago':self.x_studio_forma_de_pago,
-                'default_asignado':self.x_studio_asignado_para_hoy
+                'default_asignado':self.x_studio_asignado_para_hoy,
+
             }
         }
         
@@ -142,6 +143,8 @@ class helpdeskTimeline(models.Model):
     _name = "helpdesk.timeline.mod"
     
     timeline_help_id = fields.Many2one('helpdesk.ticket')
+    name_help_id = fields.Char(related='timeline_help_id.name', string="Nombre de Ticket")
+    reference_help_id = fields.Char(related='timeline_help_id.ticket_ref', string="Número de Ticket")
     timeline_id_b = fields.Many2one('helpdesk.ticket')
     name=fields.Char()
     stage_id = fields.Many2one('helpdesk.stage')
