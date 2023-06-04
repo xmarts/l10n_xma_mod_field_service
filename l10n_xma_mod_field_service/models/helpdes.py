@@ -22,7 +22,7 @@ class helpdeskTicket(models.Model):
     
     timeline_help_ids = fields.One2many('helpdesk.timeline.mod','timeline_help_id')
     
-    @api.onchange('stage_id')
+    @api.onchange('stage_id','team_id')
     def test_mod_help(self):
         _logger.info('//////////////////////////////////Create')
         self._create_helptime()

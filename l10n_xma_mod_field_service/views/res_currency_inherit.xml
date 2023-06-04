@@ -40,8 +40,6 @@
                             <field name="timeline_help_ids" mode="tree" context="{'timeline_help_id': id}">
                                 <tree string="">
                                     <field name="stage_id"/>
-                                    <field name="name_help_id"/>
-                                    <field name="reference_help_id"/>
                                     <field name="write_date"/>
                                     <field name="users_id"/>
                                     <field name="team_id"/>
