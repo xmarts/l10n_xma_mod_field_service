@@ -21,10 +21,20 @@ class helpdeskTicket(models.Model):
     _inherit = "helpdesk.ticket"
     
     timeline_help_ids = fields.One2many('helpdesk.timeline.mod','timeline_help_id')
-    
-    @api.onchange('stage_id','team_id')
+    team_new = fields.Char()
+    team_old = fields.Char()
+
+
+    @api.onchange('team_id')
+    def team_mod_help(self):
+        for record in self:
+            record.team_old = record.team_new
+            record.team_new = record.team_id.name
+            if record.team_old != record.team_new:
+                record._create_helptime()
+
+    @api.onchange('stage_id')
     def test_mod_help(self):
-        _logger.info('//////////////////////////////////Create')
         self._create_helptime()
     
     def _create_helptime(self):
