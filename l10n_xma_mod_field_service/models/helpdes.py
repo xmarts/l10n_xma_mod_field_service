@@ -24,11 +24,19 @@ class helpdeskTicket(models.Model):
     team_new = fields.Char()
     team_old = fields.Char()
 
-
+    def write(self, vals):
+        teams = super(helpdeskTicket, self).write(vals)
+        if not self.timeline_help_ids:
+            self._create_helptime()
+        return teams
+    
     @api.onchange('team_id')
     def team_mod_help(self):
         for record in self:
-            record.team_old = record.team_new
+            if not record.team_new:
+                record.team_old = record.team_id.name
+            else:
+                record.team_old = record.team_new
             record.team_new = record.team_id.name
             if record.team_old != record.team_new:
                 record._create_helptime()
