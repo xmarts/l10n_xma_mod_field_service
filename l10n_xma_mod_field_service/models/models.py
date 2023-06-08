@@ -23,6 +23,7 @@ class ProjectTask(models.Model):
     date_ahora = fields.Datetime()
     user_id = fields.Many2one('res.users')
     timeline_ids = fields.One2many('project.task.timeline','timeline_id')
+    ticket_no = fields.Char(string="No. Ticket", related="helpdesk_ticket_id.ticket_ref")
 
     @api.onchange('stage_id')
     def test_mod(self):
@@ -43,7 +44,7 @@ class ProjectTaskTimeline(models.Model):
 
     timeline_id = fields.Many2one('project.task')
 
-    name=fields.Char(groups="project.group_project_stages")
+    name = fields.Char(groups="project.group_project_stages")
     stage_id = fields.Many2one('project.project.stage', groups="project.group_project_stages")
     Datetime = fields.Datetime()
     users_id = fields.Many2one('res.users')
