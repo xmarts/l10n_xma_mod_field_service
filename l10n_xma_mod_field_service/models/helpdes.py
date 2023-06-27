@@ -164,7 +164,7 @@ class helpdeskTimeline(models.Model):
     department_id = fields.Many2one('res.country.state', related='timeline_help_id.x_studio_many2one_field_jBSNT', string="Departamento")
     municipality_id = fields.Many2one('x_res_municipality', related='timeline_help_id.x_studio_municipio', string="Municipio")
     zone_id = fields.Many2one('x_res_zone', related='timeline_help_id.x_studio_zona_2', string="Zona")
-    area_solicitant = fields.Char(string='Area solicitante', related='timeline_help_id.x_studio_clinica_solicitante')
+    area_solicitant = fields.Selection(string='Area solicitante', related='timeline_help_id.x_studio_clinica_solicitante')
     name_solicitant = fields.Char(string='Nombre soclitiante', related='timeline_help_id.x_studio_nombre_del_solicitante')
     partner_id = fields.Many2one("res.partner", string="Cliente", related='timeline_help_id.partner_id')
     request_delivery_date = fields.Date(string='Fecha solicitada de entrega', related='timeline_help_id.x_studio_fecha_solicitada_de_entrega')
