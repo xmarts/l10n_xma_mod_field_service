@@ -1,99 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
-        <record id="inherit_view_id_inherit_project_task" model="ir.ui.view">
-            <field name="name">project.task.view.form.inherit</field>
+        <record id="inherit_view_project_task_title" model="ir.ui.view">
+            <field name="name">inherit.view.project.task.title</field>
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_form2"/>
             <field name="arch" type="xml">
-                
-                <xpath expr="//field[@name='user_ids']" position="before">
-                      <field name="user_id" string="Asignado"/>
-                    </xpath> 
-            
-                <xpath expr="//page[1]" position="after">
-
-                    <page string="Cambios de Etapas">
-                        <field name="timeline_ids" mode="tree" context="{'timeline_id_b': id}">
-                            <tree string="" >
-                                <field name="stage_id"/>
-                                <field name="write_date"/>
-                                <field name="users_id"/>
-                            </tree>
-                        </field>
-                    </page>
+                <xpath expr="//div[@class='oe_title pe-0']" position="replace">
+                    <h1 class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex w-100">
+                                <field name="priority" widget="priority" class="me-3"/>
+                                <field name="name" class="o_task_name text-truncate w-100 w-md-75 pe-2" placeholder="Task Title..."/>
+                            </div>
+                            <field name="kanban_state" widget="state_selection" class=""/>
+                        </h1>
+                        <h2 class="d-flex justify-content-between align-items-center">
+                         <div class="d-flex w-100">
+                                <p class="me-3">
+                                  Ticket No:
+                                </p>
+                                <field name="ticket_no" class="o_task_name text-truncate w-100 w-md-75 pe-2"/>
+                            </div>
+                        </h2>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/div[2]" position="after">
+                        <field name="nombre_del_solicitante"/>
+                        <field name="clinica_solicitante"/>
                 </xpath>
             </field> 
         </record>
-
-
-        <record id="inherit_view_id_inherit_helpdesk_ticket" model="ir.ui.view">
-            <field name="name">helpdesk.ticket.view.form.inherit</field>
-            <field name="model">helpdesk.ticket</field>
-            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//sheet" position="inside">
-                    <notebook>
-                        <page string="Cambios de Etapas">
-                            <button string="Ver detalles" name="open_view_detail_helptime" type="object" class="oe_highlight"/>
-                            <field name="timeline_help_ids" mode="tree" context="{'timeline_help_id': id}">
-                                <tree string="">
-                                    <field name="stage_id"/>
-                                    <field name="write_date"/>
-                                    <field name="users_id"/>
-                                    <field name="team_id"/>
-                                    <field name="create_uid"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
-                    
-                </xpath>
-            </field> 
-        </record>
-
-        <record id="helpdesk_timeline_mod_tree" model="ir.ui.view">
-        <field name="name">helpdesk.timeline.mod.tree</field>
-        <field name="model">helpdesk.timeline.mod</field>
-            <field name="arch" type="xml">
-                <tree string="Lineas de Detalles" delete="0" create="0" edit="0">
-                    <field name="timeline_help_id" invisible="1"/>
-                    <field name="stage_id" invisible="0"/>
-                    <field name="name_help_id"/>
-                    <field name="reference_help_id"/>
-                    <field name="users_id" invisible="0"/>
-                    <field name="create_uid" invisible="0"/>
-                    <field name="write_date"/>
-                    <field name="team_id" invisible="0"/>
-                    <field name="dpi" invisible="0"/>
-                    <field name="telefono" invisible="0"/>
-                    <field name="telefono2" invisible="0"/>
-                    <field name="forma_pago" invisible="0"/>
-                    <field name="monto" invisible="0"/>
-                    <field name="dir_despacho" invisible="0"/>
-                    <field name="quien_recibe" invisible="0"/>
-                    <field name="observaciones" invisible="0"/>
-                    <field name="asignado" invisible="0"/>
-                    <field name="fecha_entrega" invisible="0"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="act_tree_timeline" model="ir.actions.act_window">
-            <field name="name">helpdesk timeline</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">helpdesk.timeline.mod</field>
-            <field name="view_mode">tree</field>
-        </record>
-
-        <menuitem
-                id="action_open_report_tree_timeline"
-                parent="helpdesk.helpdesk_ticket_report_menu_main"
-                action="act_tree_timeline"
-                name="hepldesk timeline"
-                sequence="95"
-        />
-
     </data>
 </odoo>

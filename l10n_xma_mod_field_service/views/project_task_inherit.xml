@@ -23,6 +23,10 @@
                             </div>
                         </h2>
                 </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/div[2]" position="after">
+                        <field name="nombre_del_solicitante"/>
+                        <field name="clinica_solicitante"/>
+                </xpath>
             </field> 
         </record>
     </data>
