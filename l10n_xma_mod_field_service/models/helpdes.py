@@ -17,6 +17,51 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 _logger = logging.getLogger(__name__)
 
+class ProjectTask(models.Model):
+    _inherit = "project.task"
+    ticket_no = fields.Char(string="No. Ticket", related="helpdesk_ticket_id.ticket_ref")
+    date_ahora = fields.Datetime()
+    user_id = fields.Many2one('res.users')
+    nombre_del_solicitante = fields.Char(string="Nombre del solicitante", related="helpdesk_ticket_id.x_studio_nombre_del_solicitante")
+    clinica_solicitante = fields.Selection("Clinica solicitante", related="helpdesk_ticket_id.x_studio_clinica_solicitante")
+    timeline_project_ids = fields.One2many('project.timeline.mod','timeline_project_id')
+    def write(self, vals):
+        teams = super(ProjectTask, self).write(vals)
+        if not self.timeline_project_ids:
+            self._create_projecttime()
+        return teams
+
+    @api.onchange('stage_id')
+    def test_mod_help(self):
+        self._create_projecttime()
+    
+    def _create_projecttime(self):
+        vals_list = {}
+        for a in self:
+            vals_list = {
+                'timeline_project_id': self._origin.id,
+                'ticket_id': a.helpdesk_ticket_id.id,
+                'ticket_name': a.helpdesk_ticket_id.name,
+                'ticket_no': a.helpdesk_ticket_id.ticket_ref,
+                'ticket_asignado': a.helpdesk_ticket_id.user_id.id,
+                'piloto':a.x_studio_nombre_del_piloto,
+                'circuito': a.x_studio_circuito,
+                'partner_id': a.partner_id.id,
+                'stage_id': a.stage_id.id,
+                'template_work_id': a.worksheet_template_id.id,
+                'dpi': a.x_studio_dpi,
+                'tel': a.partner_phone,
+                'tel_2': a.x_studio_telefono_2,
+                'forma_pago': a.x_studio_forma_de_pago,
+                'monto': a.x_studio_monto,
+                'direccion_d': a.x_studio_direccin_de_despacho,
+                'observacion': a.x_studio_observaciones_generales_para_entrega,
+                'articulo_venta': a.sale_line_id.id,
+                'ticket_servicio': a.x_studio_many2one_field_HP9MJ.id,
+            }
+        self.timeline_project_ids.create(vals_list)
+
+
 class helpdeskTicket(models.Model):
     _inherit = "helpdesk.ticket"
     
