@@ -24,10 +24,10 @@ class ProjectTask(models.Model):
     user_id = fields.Many2one('res.users')
     nombre_del_solicitante = fields.Char(string="Nombre del solicitante", related="helpdesk_ticket_id.x_studio_nombre_del_solicitante")
     clinica_solicitante = fields.Selection("Clinica solicitante", related="helpdesk_ticket_id.x_studio_clinica_solicitante")
-    timeline_project_ids = fields.One2many('project.timeline.mod','timeline_project_id')
+    timeline_ids = fields.One2many('project.timeline.mod','timeline_project_id')
     def write(self, vals):
         teams = super(ProjectTask, self).write(vals)
-        if not self.timeline_project_ids:
+        if not self.timeline_ids:
             self._create_projecttime()
         return teams
 
@@ -59,7 +59,7 @@ class ProjectTask(models.Model):
                 'articulo_venta': a.sale_line_id.id,
                 'ticket_servicio': a.x_studio_many2one_field_HP9MJ.id,
             }
-        self.timeline_project_ids.create(vals_list)
+        self.timeline_ids.create(vals_list)
 
 
 class helpdeskTicket(models.Model):
@@ -228,3 +228,32 @@ class helpdeskTimeline(models.Model):
                                 ('No', 'No'),
                                 ])
     fecha_entrega= fields.Date()
+
+
+class projectTimeline(models.Model):
+    _name = "project.timeline.mod"
+
+    timeline_project_id = fields.Many2one('project.task')
+    users_id = fields.Many2one('res.users')
+    ticket_name = fields.Char(string='Nombre de ticket')
+    ticket_id = fields.Integer(string='Id de ticket', default=0)
+    ticket_no = fields.Char(string='No. ticket')
+    ticket_asignado = fields.Many2one('res.users', string='Asignado')
+    piloto = fields.Char(string='Piloto')
+    circuito = fields.Char(string='Circuito')
+    partner_id = fields.Many2one('res.partner', string="Cliente")
+    stage_id = fields.Many2one('project.task.type')
+    project_id = fields.Many2one('project.project', related='timeline_project_id.project_id', string="Proyecto")
+    template_work_id = fields.Many2one('worksheet.template')
+    dpi = fields.Char(string='DPI')
+    tel = fields.Char(string='Teléfono')
+    tel_2 = fields.Char(string='Teléfono 2')
+    forma_pago = fields.Char(string='Forma de pago')
+    monto = fields.Char(string='Monto')
+    direccion_d = fields.Char(string='Dirección de despacho')
+    observacion = fields.Char(string='Observaciones generales para entrega')
+    asignado_hoy = fields.Selection(string='Asignado para hoy', related='timeline_project_id.x_studio_asignado_para_hoy_1')
+    fecha_entrega = fields.Date(string='Fecha solicitada de entrega', related='timeline_project_id.x_studio_fecha_solicitada_de_entrega')
+    articulo_venta = fields.Many2one('sale.order.line', string='Articulo en la orden de venta')
+    etiqueta = fields.Many2many('project.tags',related='timeline_project_id.tag_ids',string='Etiquetas')
+    ticket_servicio = fields.Many2one('helpdesk.ticket', related='timeline_project_id.x_studio_many2one_field_HP9MJ',string='Ticket se servicio de asistencia')

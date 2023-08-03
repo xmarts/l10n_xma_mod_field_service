@@ -29,5 +29,61 @@
                 </xpath>
             </field> 
         </record>
+<record id="inherit_view_project_task" model="ir.ui.view">
+            <field name="name">project.task.view.form.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                        <page string="Project timeline">
+                            <field name="timeline_ids" mode="tree" context="{'timeline_project_id': id}">
+                                <tree string="" delete="0" create="0" edit="0">
+                                    <field name="stage_id"/>
+                                    <field name="ticket_name"/>
+                                    <field name="ticket_no"/>
+                                    <field name="ticket_asignado"/>
+                                    <field name="piloto"/>
+                                    <field name="circuito"/>
+                                    <field name="partner_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                </xpath>
+            </field> 
+        </record>
+        <record id="project_task_timeline_mod_tree" model="ir.ui.view">
+        <field name="name">project.task.timeline.mod.tree</field>
+        <field name="model">project.timeline.mod</field>
+            <field name="arch" type="xml">
+                <tree string="Lineas de Detalles" delete="0" create="0" edit="0">
+                    <field name="timeline_project_id" invisible="1"/>
+                    <field name="stage_id" invisible="0"/>
+                    <field name="write_date" invisible="0"/>
+                    <field name="ticket_no"/>
+                    <field name="ticket_name"/>
+                    <field name="project_id"/>
+                    <field name="piloto" invisible="0"/>
+                    <field name="circuito"/>
+                    <field name="partner_id"/>
+                    <field name="ticket_servicio" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="act_tree_timeline_project" model="ir.actions.act_window">
+            <field name="name">Project timeline</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.timeline.mod</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem
+                id="action_open_report_tree_timeline_project"
+                parent="project.menu_project_report"
+                action="act_tree_timeline_project"
+                name="Project timeline"
+                sequence="95"
+        />
+
     </data>
 </odoo>
