@@ -74,6 +74,7 @@
                 <field name="street_to_invoice" string="Dirección de facturación"/>
                 <field name="payment_way" string="Forma de Pago" attrs="{}" required="1"/>
                 <field name="amount" string="Total de la factura " attrs="{}" required="1"/>
+                <field name="amount_change" string="Pago efectivo, especificar si necesita vuelto" attrs="{}" required="1"/>
                 <field name="street_dispach" string="Dirección de despacho" widget="char"/>
                 <field name="zone" string="Zona" readonly="0"/>
                 <field name="municipality_id" string="Municipio" attrs="{}" required="1"/>
