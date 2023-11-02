@@ -27,6 +27,28 @@
                         <field name="nombre_del_solicitante"/>
                         <field name="clinica_solicitante"/>
                 </xpath>
+                  <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='user_id']" position="after">
+                    <field name="pilot_name" string="Nombre del piloto"/>
+                    <field name="circuit" string="Circuito"/>
+                    <field name="dpi_number" string="DPI"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='user_ids']" position="attributes">
+                    <attribute name="attrs">{}</attribute>
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/div[2]" position="after">
+                    <field name="phone2" string="Telefono 2"/>
+                    <field name="payment_way" string="Forma de pago:"/>
+                    <field name="amount" string="Monto"/>
+                    <field name="street_dispach" string="Dirección de despacho"/>
+                    <field name="who_receives" string="Nombre de quien recibe"/>
+                    <field name="general_delivery_remarks" string="Observaciones generales para entrega"/>
+                    <field name="assigned_today" string="Asignado para hoy"/>
+                    <field name="date_delivery" string="Fecha solicitada de entrega"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='tag_ids']" position="after">
+                    <field name="helpdesk_ticket_id"/>
+                </xpath>
             </field> 
         </record>
 <record id="inherit_view_project_task" model="ir.ui.view">

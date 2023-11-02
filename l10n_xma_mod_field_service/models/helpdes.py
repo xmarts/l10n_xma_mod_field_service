@@ -22,9 +22,41 @@ class ProjectTask(models.Model):
     ticket_no = fields.Char(string="No. Ticket", related="helpdesk_ticket_id.ticket_ref")
     date_ahora = fields.Datetime()
     user_id = fields.Many2one('res.users')
-    nombre_del_solicitante = fields.Char(string="Nombre del solicitante", related="helpdesk_ticket_id.x_studio_nombre_del_solicitante")
-    clinica_solicitante = fields.Selection("Clinica solicitante", related="helpdesk_ticket_id.x_studio_clinica_solicitante")
+    nombre_del_solicitante = fields.Char(string="Nombre del solicitante", related="helpdesk_ticket_id.nombre_del_solicitante")
+    clinica_solicitante = fields.Selection("Clinica solicitante", related="helpdesk_ticket_id.clinica_solicitante")
     timeline_ids = fields.One2many('project.timeline.mod','timeline_project_id')
+    partner_phone2 = fields.Char(string="Telefono 2?", related="helpdesk_ticket_id.phone2")
+    pilot_name = fields.Char(string="Nombre del piloto")
+    circuit = fields.Char(string="Circuito")
+    dpi_number = fields.Char(string="DPI", related="partner_id.dpi_number")
+    ticket_service_id = fields.Many2one("helpdesk.ticket", string="Ticket de servicio de asistencia")
+    phone2 = fields.Char(string="Teléfono 2", related="helpdesk_ticket_id.phone2")
+    amount = fields.Float(string="Total de la factura", related="helpdesk_ticket_id.amount")
+    street_dispach = fields.Char(string="Dirección de despacho", related="helpdesk_ticket_id.street_dispach")
+    who_receives = fields.Char(string="Nombre de quien recibe", related="helpdesk_ticket_id.who_receives")
+    general_delivery_remarks = fields.Char(string="Observaciones generales para entrega", related="helpdesk_ticket_id.general_delivery_remarks")
+    date_delivery = fields.Date(string="Fecha solicitada de entrega", related="helpdesk_ticket_id.date_delivery")
+    assigned_today = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Asignado para hoy", related="helpdesk_ticket_id.assigned_today") 
+    payment_way = fields.Selection([
+        ('Efectivo', 'Efectivo contra entrega'),
+        ('Tarjeta', 'Tarjeta/POS'),
+        ('Visalink', 'Visalink'),
+        ('Cancelado', 'Cancelado'),
+        ('Solo para asignar NO UTILIZAR','Solo para asignar NO UTILIZAR')
+    ], string="Forma de Pago", related="helpdesk_ticket_id.payment_way")
+    clinica_solicitante = fields.Selection(
+        [('CONDADO', 'CONDADO'),
+         ('MAJADAS', 'MAJADAS'),
+         ('AMÉRICAS', 'AMÉRICAS'),
+         ('XPO1', 'XPO1'),
+         ('FRUTAL', 'FRUTAL'),
+         ('PORTALES', 'PORTALES'),
+         ('SAN CRISTOBAL', 'SAN CRISTOBAL'),
+         ('BLUEMEDS', 'BLUEMEDS'),
+         ('DELIVERY CAS', 'DELIVERY CAS'),
+         ('DESPACHO', 'DESPACHO')],
+        string="Área solicitante", related="helpdesk_ticket_id.clinica_solicitante")
+    
     def write(self, vals):
         teams = super(ProjectTask, self).write(vals)
         if not self.timeline_ids:
@@ -44,20 +76,20 @@ class ProjectTask(models.Model):
                 'ticket_name': a.helpdesk_ticket_id.name,
                 'ticket_no': a.helpdesk_ticket_id.ticket_ref,
                 'ticket_asignado': a.helpdesk_ticket_id.user_id.id,
-                'piloto':a.x_studio_nombre_del_piloto,
-                'circuito': a.x_studio_circuito,
+                'piloto':a.pilot_name,
+                'circuito': a.circuit,
                 'partner_id': a.partner_id.id,
                 'stage_id': a.stage_id.id,
                 'template_work_id': a.worksheet_template_id.id,
-                'dpi': a.x_studio_dpi,
+                'dpi': a.dpi_number,
                 'tel': a.partner_phone,
-                'tel_2': a.x_studio_telefono_2,
-                'forma_pago': a.x_studio_forma_de_pago,
-                'monto': a.x_studio_monto,
-                'direccion_d': a.x_studio_direccin_de_despacho,
-                'observacion': a.x_studio_observaciones_generales_para_entrega,
+                'tel_2': a.partner_phone2,
+                'forma_pago': a.payment_way,
+                'monto': a.amount,
+                'direccion_d': a.street_dispach,
+                'observacion': a.general_delivery_remarks,
                 'articulo_venta': a.sale_line_id.id,
-                'ticket_servicio': a.x_studio_many2one_field_HP9MJ.id,
+                'ticket_servicio': a.ticket_service_id.id,
             }
         self.timeline_ids.create(vals_list)
 
@@ -68,6 +100,61 @@ class helpdeskTicket(models.Model):
     timeline_help_ids = fields.One2many('helpdesk.timeline.mod','timeline_help_id')
     team_new = fields.Char()
     team_old = fields.Char()
+    insurance_carrier_id = fields.Many2one('xmart.hospital', string="Aseguradora", related="partner_id.insurance_carrier_id")
+    nombre_del_solicitante = fields.Char(string="Nombre de solicitante")
+    clinica_solicitante = fields.Selection(
+        [('CONDADO', 'CONDADO'),
+         ('MAJADAS', 'MAJADAS'),
+         ('AMÉRICAS', 'AMÉRICAS'),
+         ('XPO1', 'XPO1'),
+         ('FRUTAL', 'FRUTAL'),
+         ('PORTALES', 'PORTALES'),
+         ('SAN CRISTOBAL', 'SAN CRISTOBAL'),
+         ('BLUEMEDS', 'BLUEMEDS'),
+         ('DELIVERY CAS', 'DELIVERY CAS'),
+         ('DESPACHO', 'DESPACHO')],
+        string="Área solicitante")
+    birthdate = fields.Date(string="Fecha de nacimiento", related="partner_id.birthdate")
+    dpi_number = fields.Char(string="DPI", related="partner_id.dpi_number")
+    phone = fields.Char(string="Teléfono", related="partner_id.phone")
+    email = fields.Char(string="Correo Electrónico", related="partner_id.email")
+    ticket_number = fields.Char(string="Boleta/Token")
+    bluemeds_id = fields.Char(string="Personal ID (Bluemeds)")
+    welcome_bluemeds = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Requiere kit de bienvenida (Bluemeds)") 
+    no_affilition = fields.Char(string="Afiliación", related="partner_id.no_affilition")
+    no_carnet = fields.Char(string="Núm. de carnet de seguro")
+    doctor_internal = fields.Char(string="Doctor interno")
+    doctor_external = fields.Char(string="Doctor Externo")
+    form = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Cuenta con formulario de autorización") 
+    prescription = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Cuenta con receta medica") 
+    telemedicine = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Telemedicina") 
+    phone2 = fields.Char(string="Teléfono 2")
+    amount = fields.Float(string="Total de la factura")
+    street_dispach = fields.Char(string="Dirección de despacho")
+    who_receives = fields.Char(string="Nombre de quien recibe")
+    general_delivery_remarks = fields.Char(string="Observaciones generales para entrega")
+    date_delivery = fields.Date(string="Fecha solicitada de entrega")
+    assigned_today = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Asignado para hoy") 
+    payment_way = fields.Selection([
+        ('Efectivo', 'Efectivo contra entrega'),
+        ('Tarjeta', 'Tarjeta/POS'),
+        ('Visalink', 'Visalink'),
+        ('Cancelado', 'Cancelado'),
+        ('Solo para asignar NO UTILIZAR','Solo para asignar NO UTILIZAR')
+    ], string="Forma de Pago")
+    department_id = fields.Many2one("res.country.state", string="Departamento", related="partner_id.state")
+    municipality_id = fields.Many2one("res.country.municipality", string="Municipio", related="partner_id.municipality")
+    zone = fields.Char(string="Zona", related="partner_id.zone")
+    vat = fields.Char(string="NIT para facturación", related="partner_id.vat")
+    name_to_invoice = fields.Char(string="Nombre de a quien se factura")
+    street_to_invoice = fields.Char(string="Dirección de facturación")
+    amount_change = fields.Char(string="Pago efectivo, especificar si necesita vuelto")
+    cc_email = fields.Char(string="CC del correo electrónico")
+    order_id = fields.Char(string="Orden ID")
+    type_order = fields.Selection([('Supervisar', 'Supervisar'), ('Cobros en cola', 'Cobros en cola')], string="Tipo de orden")
+    amount_total_invoice = fields.Float(string="Monto total Orden")
+    amount_total_paid = fields.Float(string="Monto total cobrado")
+    assigned_priority = fields.Selection([('Prioridad para cabina de seguros', 'Prioridad para cabina de seguros')], string="Asignación prioritaria en clínica")
 
     def write(self, vals):
         teams = super(helpdeskTicket, self).write(vals)
@@ -102,16 +189,16 @@ class helpdeskTicket(models.Model):
                 'create_uid': a.create_uid.id,
                 'users_id': a.user_id.id,
                 'team_id':a.team_id.id,
-                'dpi': self.x_studio_dpi,
-                'telefono': self.x_studio_telfono,
-                'telefono2': self.x_studio_tel_2,
-                'monto': self.x_studio_monto,
-                'dir_despacho': self.x_studio_direccin_de_despacho,
-                'quien_recibe': self.x_studio_nombre_de_quien_recibe,
-                'observaciones': self.x_studio_observaciones_generales_para_entrega,
-                'fecha_entrega': self.x_studio_fecha_solicitada_de_entrega,
-                #'forma_pago':self.x_studio_forma_de_pago_1,
-                'asignado':self.x_studio_asignado_para_hoy
+                'dpi': self.dpi_number,
+                'telefono': self.phone,
+                'telefono2': self.phone2,
+                'monto': self.amount,
+                'dir_despacho': self.street_dispach,
+                'quien_recibe': self.who_receives,
+                'observaciones': self.general_delivery_remarks,
+                'fecha_entrega': self.date_delivery,
+                #'forma_pago':self.payment_way_1,
+                'asignado':self.assigned_today
             }
         self.timeline_help_ids.create(vals_list)
     
@@ -149,16 +236,16 @@ class helpdeskTicket(models.Model):
                 'default_partner_id': self.partner_id.id if self.partner_id else False,
                 'default_name': self.name,
                 'default_project_id': self.team_id.fsm_project_id.id,
-                'default_dpi': self.x_studio_dpi,
-                'default_telefono': self.x_studio_telfono,
-                'default_telefono2': self.x_studio_tel_2,
-                'default_monto': self.x_studio_monto,
-                'default_dir_despacho': self.x_studio_direccin_de_despacho,
-                'default_quien_recibe': self.x_studio_nombre_de_quien_recibe,
-                'default_observaciones': self.x_studio_observaciones_generales_para_entrega,
-                'default_fecha_entrega': self.x_studio_fecha_solicitada_de_entrega,
-                'default_forma_pago':self.x_studio_forma_de_pago,
-                'default_asignado':self.x_studio_asignado_para_hoy,
+                'default_dpi': self.dpi_number,
+                'default_telefono': self.phone,
+                'default_telefono2': self.phone2,
+                'default_monto': self.amount,
+                'default_dir_despacho': self.street_dispach,
+                'default_quien_recibe': self.who_receives,
+                'default_observaciones': self.general_delivery_remarks,
+                'default_fecha_entrega': self.date_delivery,
+                'default_forma_pago':self.payment_way,
+                'default_asignado':self.assigned_today,
 
             }
         }
@@ -189,16 +276,16 @@ class CreateTask(models.TransientModel):
             'project_id': self.project_id.id,
             'partner_id': self.partner_id.id,
             'description': self.helpdesk_ticket_id.description,
-            'x_studio_dpi': self.dpi,
+            'dpi_number': self.dpi,
             'partner_phone': self.telefono,
-            'x_studio_telefono_2': self.telefono2,
-            'x_studio_monto': self.monto,
-            'x_studio_direccin_de_despacho': self.dir_despacho,
-            'x_studio_nombre_de_quien_recibe': self.quien_recibe,
-            'x_studio_observaciones_generales_para_entrega': self.observaciones,
-            'x_studio_fecha_solicitada_de_entrega': self.fecha_entrega,
-            'x_studio_forma_de_pago': self.forma_pago,
-            'x_studio_asignado_para_hoy_1': self.asignado,
+            'partner_phone2': self.telefono2,
+            'amount': self.monto,
+            'street_dispach': self.dir_despacho,
+            'who_receives': self.quien_recibe,
+            'general_delivery_remarks': self.observaciones,
+            'date_delivery': self.fecha_entrega,
+            'payment_way': self.forma_pago,
+            'assigned_today_1': self.asignado,
         }
         
     
@@ -206,13 +293,13 @@ class helpdeskTimeline(models.Model):
     _name = "helpdesk.timeline.mod"
     
     timeline_help_id = fields.Many2one('helpdesk.ticket')
-    department_id = fields.Many2one('res.country.state', related='timeline_help_id.x_studio_many2one_field_jBSNT', string="Departamento")
-    municipality_id = fields.Many2one('x_res_municipality', related='timeline_help_id.x_studio_municipio', string="Municipio")
-    zone_id = fields.Many2one('x_res_zone', related='timeline_help_id.x_studio_zona_2', string="Zona")
-    area_solicitant = fields.Selection(string='Area solicitante', related='timeline_help_id.x_studio_clinica_solicitante')
-    name_solicitant = fields.Char(string='Nombre solicitante', related='timeline_help_id.x_studio_nombre_del_solicitante')
+    department_id = fields.Many2one('res.country.state', related='timeline_help_id.department_id', string="Departamento")
+    municipality_id = fields.Many2one('x_res_municipality', related='timeline_help_id.municipality_id', string="Municipio")
+    zone_id = fields.Char(string="Zona")
+    area_solicitant = fields.Selection(string='Area solicitante', related='timeline_help_id.clinica_solicitante')
+    name_solicitant = fields.Char(string='Nombre solicitante', related='timeline_help_id.nombre_del_solicitante')
     partner_id = fields.Many2one("res.partner", string="Cliente", related='timeline_help_id.partner_id')
-    request_delivery_date = fields.Date(string='Fecha solicitada de entrega', related='timeline_help_id.x_studio_fecha_solicitada_de_entrega')
+    request_delivery_date = fields.Date(string='Fecha solicitada de entrega', related='timeline_help_id.date_delivery')
     name_help_id = fields.Char(related='timeline_help_id.name', string="Nombre de Ticket")
     reference_help_id = fields.Char(related='timeline_help_id.ticket_ref', string="Número de Ticket")
     timeline_id_b = fields.Many2one('helpdesk.ticket')
@@ -259,8 +346,8 @@ class projectTimeline(models.Model):
     monto = fields.Char(string='Monto')
     direccion_d = fields.Char(string='Dirección de despacho')
     observacion = fields.Char(string='Observaciones generales para entrega')
-    asignado_hoy = fields.Selection(string='Asignado para hoy', related='timeline_project_id.x_studio_asignado_para_hoy_1')
-    fecha_entrega = fields.Date(string='Fecha solicitada de entrega', related='timeline_project_id.x_studio_fecha_solicitada_de_entrega')
+    asignado_hoy = fields.Selection(string='Asignado para hoy', related='timeline_project_id.assigned_today_1')
+    fecha_entrega = fields.Date(string='Fecha solicitada de entrega', related='timeline_project_id.date_delivery')
     articulo_venta = fields.Many2one('sale.order.line', string='Articulo en la orden de venta')
     etiqueta = fields.Many2many('project.tags',related='timeline_project_id.tag_ids',string='Etiquetas')
-    ticket_servicio = fields.Many2one('helpdesk.ticket', related='timeline_project_id.x_studio_many2one_field_HP9MJ',string='Ticket se servicio de asistencia')
+    ticket_servicio = fields.Many2one('helpdesk.ticket', related='timeline_project_id.ticket_service_id',string='Ticket se servicio de asistencia')

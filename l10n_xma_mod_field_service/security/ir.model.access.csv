@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_helpdesk_timeline_mod,access_helpdesk.timeline.mod,model_helpdesk_timeline_mod,base.group_user,1,1,1,1
 access_project_timeline_mod,access_project.timeline.mod,model_project_timeline_mod,base.group_user,1,1,1,1
+access_res_country_municipality,access_res.country.municipality,model_res_country_municipality,base.group_user,1,1,1

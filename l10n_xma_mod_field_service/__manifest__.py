@@ -19,5 +19,7 @@
         #'views/res_currency_rate_inherit.xml',
         'views/res_currency_inherit.xml',
         'views/project_task_inherit.xml',
+        'views/ticket.xml',
+        
     ],
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherit_view_helpdesk_ticket_form" model="ir.ui.view">
+            <field name="name">inherit.view.helpdesk.ticket.form</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//form[1]/sheet[1]/div[not(@name)][2]" position="replace">
+                    <group name="grupo1">
+                        <group name="grupo1-2" string="USO EXCLUSIVO BLUMEDS">
+                            <field name="order_id" string="Orden ID"/>
+                            <field name="type_order" string="Tipo de orden "/>
+                            <field name="amount_total_invoice" string="Monto total Orden "/>
+                            <field name="amount_total_paid" string="Monto total cobrado"/>
+                            <field name="assigned_priority" string="Asignación prioritaria en clínica"/>
+                        </group>
+                    </group>
+                </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/label[2]" position="replace"/>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/label[1]" position="replace"/>
+            <xpath expr="//field[@name='sla_status_ids']" position="replace"/>
+            <xpath expr="//button[@name='action_generate_fsm_task']" position="attributes">
+                <attribute name="studio_approval">False</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='user_id']" position="after">
+                <xpath expr="//field[@name='partner_id']" position="move"/>
+                <field name="birthdate" string="Fecha de nacimiento"/>
+                <field name="dpi_number" string="DPI:"/>
+                <field name="phone" string="Teléfono" attrs="{}" required="1"/>
+                <field name="phone2" string="Teléfono 2"/>
+                <field name="email" string="Correo Electrónico "/>
+                <field name="ticket_number" string="Boleta/token" attrs="{}" required="1"/>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='ticket_type_id']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="ticket_number" string="Boleta / Token" attrs="{}" invisible="1"/>
+                <field name="bluemeds_id" string="Personal ID (Bluemeds)"/>
+                <field name="welcome_bluemeds" string="Requiere kit de bienvenida (Bluemeds)"/>
+                <field name="no_affilition" string="Afiliación"/>
+                <field name="no_carnet" string=" Núm. de carnet de seguro"/>
+                <field name="insurance_carrier_id" string="Seguros"/>
+                <field name="doctor_internal" string="Doctor Interno "/>
+                <field name="doctor_external" string="Doctor Externo"/>
+                <field name="form" string="Cuenta con formulario de autorización"/>
+                <field name="prescription" string="Cuenta con receta medica"/>
+                <field name="telemedicine" string="Telemedicina"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="force_save">True</attribute>
+                <attribute name="invisible">1</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_email']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_phone']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/div[2]" position="after">
+                <field name="vat" string="NIT para facturación"/>
+                <field name="name_to_invoice" string="Nombre de a quien se factura"/>
+                <field name="street_to_invoice" string="Dirección de facturación"/>
+                <field name="payment_way" string="Forma de Pago" attrs="{}" required="1"/>
+                <field name="amount" string="Total de la factura " attrs="{}" required="1"/>
+                <field name="street_dispach" string="Dirección de despacho" widget="char"/>
+                <field name="zone" string="Zona" attrs="{}" required="1"/>
+                <field name="municipality" string="Municipio" attrs="{}" required="1"/>
+                <field name="state" domain="[[&quot;country_id.name&quot;,&quot;=&quot;,&quot;Guatemala&quot;]]" attrs="{}" required="1" string="Departamento"/>
+                <field name="who_receives" string="Nombre de quien recibe"/>
+                <field name="general_delivery_remarks" string="Observaciones generales para entrega"/>
+                <field name="assigned_today" string="Asignado para hoy"/>
+                <field name="date_delivery" string="Fecha solicitada de entrega"/>
+                <field name="clinica_solicitante" string="Área solicitante" attrs="{}" required="1"/>
+                <field name="nombre_del_solicitante" string="Nombre del solicitante " attrs="{}" required="1"/>
+                <field name="create_uid" string="Creador"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="required">1</attribute>
+            </xpath>
+            </field> 
+        </record>
+    </data>
+</odoo>
