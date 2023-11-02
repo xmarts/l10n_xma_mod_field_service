@@ -121,7 +121,7 @@ class helpdeskTicket(models.Model):
     ticket_number = fields.Char(string="Boleta/Token")
     bluemeds_id = fields.Char(string="Personal ID (Bluemeds)")
     welcome_bluemeds = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Requiere kit de bienvenida (Bluemeds)") 
-    no_affilition = fields.Char(string="Afiliación", related="partner_id.no_affilition")
+    no_affilition = fields.Char(string="Afiliación")
     no_carnet = fields.Char(string="Núm. de carnet de seguro")
     doctor_internal = fields.Char(string="Doctor interno")
     doctor_external = fields.Char(string="Doctor Externo")
