@@ -153,7 +153,7 @@ class CreateTask(models.TransientModel):
             'general_delivery_remarks': self.observaciones,
             'date_delivery': self.fecha_entrega,
             'payment_way': self.forma_pago,
-            'assigned_today_1': self.asignado,
+            'assigned_today': self.asignado,
         }
         
     

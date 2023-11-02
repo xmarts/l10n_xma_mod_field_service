@@ -142,8 +142,8 @@ class helpdeskTicket(models.Model):
         ('Cancelado', 'Cancelado'),
         ('Solo para asignar NO UTILIZAR','Solo para asignar NO UTILIZAR')
     ], string="Forma de Pago")
-    department_id = fields.Many2one("res.country.state", string="Departamento", related="partner_id.state")
-    municipality_id = fields.Many2one("res.country.municipality", string="Municipio", related="partner_id.municipality")
+    department_id = fields.Many2one("res.country.state", string="Departamento")
+    municipality_id = fields.Many2one("res.country.municipality", string="Municipio")
     zone = fields.Char(string="Zona", related="partner_id.zone")
     vat = fields.Char(string="NIT para facturación", related="partner_id.vat")
     name_to_invoice = fields.Char(string="Nombre de a quien se factura")
@@ -285,7 +285,7 @@ class CreateTask(models.TransientModel):
             'general_delivery_remarks': self.observaciones,
             'date_delivery': self.fecha_entrega,
             'payment_way': self.forma_pago,
-            'assigned_today_1': self.asignado,
+            'assigned_today': self.asignado,
         }
         
     
@@ -346,7 +346,7 @@ class projectTimeline(models.Model):
     monto = fields.Char(string='Monto')
     direccion_d = fields.Char(string='Dirección de despacho')
     observacion = fields.Char(string='Observaciones generales para entrega')
-    asignado_hoy = fields.Selection(string='Asignado para hoy', related='timeline_project_id.assigned_today_1')
+    asignado_hoy = fields.Selection(string='Asignado para hoy', related='timeline_project_id.assigned_today')
     fecha_entrega = fields.Date(string='Fecha solicitada de entrega', related='timeline_project_id.date_delivery')
     articulo_venta = fields.Many2one('sale.order.line', string='Articulo en la orden de venta')
     etiqueta = fields.Many2many('project.tags',related='timeline_project_id.tag_ids',string='Etiquetas')

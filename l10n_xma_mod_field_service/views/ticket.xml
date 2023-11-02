@@ -20,9 +20,6 @@
             <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/label[2]" position="replace"/>
             <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/label[1]" position="replace"/>
             <xpath expr="//field[@name='sla_status_ids']" position="replace"/>
-            <xpath expr="//button[@name='action_generate_fsm_task']" position="attributes">
-                <attribute name="studio_approval">False</attribute>
-            </xpath>
             <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='user_id']" position="after">
                 <xpath expr="//field[@name='partner_id']" position="move"/>
                 <field name="birthdate" string="Fecha de nacimiento"/>
@@ -78,9 +75,9 @@
                 <field name="payment_way" string="Forma de Pago" attrs="{}" required="1"/>
                 <field name="amount" string="Total de la factura " attrs="{}" required="1"/>
                 <field name="street_dispach" string="Dirección de despacho" widget="char"/>
-                <field name="zone" string="Zona" attrs="{}" required="1"/>
-                <field name="municipality" string="Municipio" attrs="{}" required="1"/>
-                <field name="state" domain="[[&quot;country_id.name&quot;,&quot;=&quot;,&quot;Guatemala&quot;]]" attrs="{}" required="1" string="Departamento"/>
+                <field name="zone" string="Zona" readonly="0"/>
+                <field name="municipality_id" string="Municipio" attrs="{}" required="1"/>
+                <field name="department_id" domain="[[&quot;country_id.name&quot;,&quot;=&quot;,&quot;Guatemala&quot;]]" attrs="{}" required="1" string="Departamento"/>
                 <field name="who_receives" string="Nombre de quien recibe"/>
                 <field name="general_delivery_remarks" string="Observaciones generales para entrega"/>
                 <field name="assigned_today" string="Asignado para hoy"/>
