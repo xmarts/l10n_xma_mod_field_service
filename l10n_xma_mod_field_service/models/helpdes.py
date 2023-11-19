@@ -97,11 +97,12 @@ class ProjectTask(models.Model):
 class helpdeskTicket(models.Model):
     _inherit = "helpdesk.ticket"
     
+    create_uid = fields.Many2one('res.users', readonly=False, store=True)
     partner_name = fields.Char(string="Cliente")
     timeline_help_ids = fields.One2many('helpdesk.timeline.mod','timeline_help_id')
     team_new = fields.Char()
     team_old = fields.Char()
-    insurance_carrier_id = fields.Many2one('xmart.hospital', string="Aseguradora", related="partner_id.insurance_carrier_id", store=True)
+    insurance_carrier_id = fields.Many2one('xmart.hospital', string="Aseguradora", store=True)
     nombre_del_solicitante = fields.Char(string="Nombre de solicitante")
     clinica_solicitante = fields.Selection(
         [('CONDADO', 'CONDADO'),
