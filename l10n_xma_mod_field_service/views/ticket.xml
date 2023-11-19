@@ -43,7 +43,6 @@
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="replace">
                 <field name="partner_id" invisible="1"/>
-                <field name="partner_name"/>
             </xpath>
             <xpath expr="//field[@name='tag_ids']" position="after">
                 <field name="ticket_number" string="Boleta / Token" attrs="{}" invisible="1"/>
