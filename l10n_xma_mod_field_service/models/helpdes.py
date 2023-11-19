@@ -28,7 +28,7 @@ class ProjectTask(models.Model):
     partner_phone2 = fields.Char(string="Telefono 2?", related="helpdesk_ticket_id.phone2")
     pilot_name = fields.Char(string="Nombre del piloto")
     circuit = fields.Char(string="Circuito")
-    dpi_number = fields.Char(string="DPI", related="partner_id.dpi_number")
+    dpi_number = fields.Char(string="DPI", related="partner_id.dpi_number", readonly=False)
     ticket_service_id = fields.Many2one("helpdesk.ticket", string="Ticket de servicio de asistencia")
     phone2 = fields.Char(string="Teléfono 2", related="helpdesk_ticket_id.phone2")
     amount = fields.Float(string="Total de la factura", related="helpdesk_ticket_id.amount")

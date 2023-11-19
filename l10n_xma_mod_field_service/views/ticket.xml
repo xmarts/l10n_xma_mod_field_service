@@ -23,8 +23,8 @@
             <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='user_id']" position="after">
                 <xpath expr="//field[@name='partner_id']" position="move"/>
                 <field name="birthdate" string="Fecha de nacimiento"/>
-                <field name="dpi_number" string="DPI:"/>
-                <field name="phone" string="Teléfono" attrs="{}" required="1"/>
+                <field name="dpi_number" string="DPI:" readonly="0"/>
+                <field name="phone" string="Teléfono" readonly="0" required="1"/>
                 <field name="phone2" string="Teléfono 2"/>
                 <field name="email" string="Correo Electrónico "/>
                 <field name="ticket_number" string="Boleta/token" attrs="{}" required="1"/>
