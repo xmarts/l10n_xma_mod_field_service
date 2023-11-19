@@ -97,7 +97,7 @@ class ProjectTask(models.Model):
 class helpdeskTicket(models.Model):
     _inherit = "helpdesk.ticket"
     
-    create_uid = fields.Many2one('res.users', readonly=False, store=True)
+    create_uid = fields.Many2one('res.users', readonly=False, store=True, copied=False)
     partner_name = fields.Char(string="Cliente")
     timeline_help_ids = fields.One2many('helpdesk.timeline.mod','timeline_help_id')
     team_new = fields.Char()
