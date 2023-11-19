@@ -101,7 +101,7 @@ class helpdeskTicket(models.Model):
     timeline_help_ids = fields.One2many('helpdesk.timeline.mod','timeline_help_id')
     team_new = fields.Char()
     team_old = fields.Char()
-    insurance_carrier_id = fields.Many2one('xmart.hospital', string="Aseguradora", related="partner_id.insurance_carrier_id")
+    insurance_carrier_id = fields.Many2one('xmart.hospital', string="Aseguradora", related="partner_id.insurance_carrier_id", store=True)
     nombre_del_solicitante = fields.Char(string="Nombre de solicitante")
     clinica_solicitante = fields.Selection(
         [('CONDADO', 'CONDADO'),
@@ -115,11 +115,11 @@ class helpdeskTicket(models.Model):
          ('DELIVERY CAS', 'DELIVERY CAS'),
          ('DESPACHO', 'DESPACHO')],
         string="Área solicitante")
-    birthdate = fields.Date(string="Fecha de nacimiento", related="partner_id.birthdate")
-    dpi_number = fields.Char(string="DPI", related="partner_id.dpi_number")
-    phone = fields.Char(string="Teléfono", related="partner_id.phone")
-    email = fields.Char(string="Correo Electrónico", related="partner_id.email")
-    ticket_number = fields.Char(string="Boleta/Token")
+    birthdate = fields.Date(string="Fecha de nacimiento", related="partner_id.birthdate", store=True)
+    dpi_number = fields.Char(string="DPI", related="partner_id.dpi_number", store=True)
+    phone = fields.Char(string="Teléfono", related="partner_id.phone", store=True)
+    email = fields.Char(string="Correo Electrónico", related="partner_id.email", store=True)
+    ticket_number = fields.Char(string="Boleta/Token", store=True)
     bluemeds_id = fields.Char(string="Personal ID (Bluemeds)")
     welcome_bluemeds = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Requiere kit de bienvenida (Bluemeds)") 
     no_affilition = fields.Char(string="Afiliación")
@@ -145,8 +145,8 @@ class helpdeskTicket(models.Model):
     ], string="Forma de Pago")
     department_id = fields.Many2one("res.country.state", string="Departamento")
     municipality_id = fields.Many2one("res.country.municipality", string="Municipio")
-    zone = fields.Char(string="Zona", related="partner_id.zone")
-    vat = fields.Char(string="NIT para facturación", related="partner_id.vat")
+    zone = fields.Char(string="Zona", related="partner_id.zone", store=True)
+    vat = fields.Char(string="NIT para facturación", related="partner_id.vat", store=True)
     name_to_invoice = fields.Char(string="Nombre de a quien se factura")
     street_to_invoice = fields.Char(string="Dirección de facturación")
     amount_change = fields.Char(string="Pago efectivo, especificar si necesita vuelto")
