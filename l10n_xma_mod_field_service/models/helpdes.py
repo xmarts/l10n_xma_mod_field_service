@@ -97,6 +97,7 @@ class ProjectTask(models.Model):
 class helpdeskTicket(models.Model):
     _inherit = "helpdesk.ticket"
     
+    partner_name = fields.Char(string="Cliente")
     timeline_help_ids = fields.One2many('helpdesk.timeline.mod','timeline_help_id')
     team_new = fields.Char()
     team_old = fields.Char()
