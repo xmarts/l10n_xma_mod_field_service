@@ -24,10 +24,10 @@
                 <xpath expr="//field[@name='partner_id']" position="move"/>
                 <field name="birthdate" string="Fecha de nacimiento" readonly="0"/>
                 <field name="dpi_number" string="DPI:" readonly="0"/>
-                <field name="phone" string="Teléfono" readonly="0" required="1"/>
+                <field name="phone" string="Teléfono" readonly="0" required="0"/>
                 <field name="phone2" string="Teléfono 2"/>
                 <field name="email" string="Correo Electrónico "/>
-                <field name="ticket_number" string="Boleta/token" attrs="{}" required="1"/>
+                <field name="ticket_number" string="Boleta/token" attrs="{}" required="0"/>
             </xpath>
             <xpath expr="//field[@name='priority']" position="attributes">
                 <attribute name="attrs">{}</attribute>
@@ -69,19 +69,19 @@
                 <field name="vat" string="NIT para facturación" readonly="0"/>
                 <field name="name_to_invoice" string="Nombre de a quien se factura"/>
                 <field name="street_to_invoice" string="Dirección de facturación"/>
-                <field name="payment_way" string="Forma de Pago" attrs="{}" required="1"/>
-                <field name="amount" string="Total de la factura " attrs="{}" required="1"/>
-                <field name="amount_change" string="Pago efectivo, especificar si necesita vuelto" attrs="{}" required="1"/>
+                <field name="payment_way" string="Forma de Pago" attrs="{}" required="0"/>
+                <field name="amount" string="Total de la factura " attrs="{}" required="0"/>
+                <field name="amount_change" string="Pago efectivo, especificar si necesita vuelto" attrs="{}" required="0"/>
                 <field name="street_dispach" string="Dirección de despacho" widget="char"/>
                 <field name="zone" string="Zona" readonly="0"/>
-                <field name="municipality_id" string="Municipio" attrs="{}" required="1"/>
-                <field name="department_id" domain="[[&quot;country_id.name&quot;,&quot;=&quot;,&quot;Guatemala&quot;]]" attrs="{}" required="1" string="Departamento"/>
+                <field name="municipality_id" string="Municipio" attrs="{}" required="0"/>
+                <field name="department_id" domain="[[&quot;country_id.name&quot;,&quot;=&quot;,&quot;Guatemala&quot;]]" attrs="{}" required="0" string="Departamento"/>
                 <field name="who_receives" string="Nombre de quien recibe"/>
                 <field name="general_delivery_remarks" string="Observaciones generales para entrega"/>
                 <field name="assigned_today" string="Asignado para hoy"/>
                 <field name="date_delivery" string="Fecha solicitada de entrega"/>
-                <field name="clinica_solicitante" string="Área solicitante" attrs="{}" required="1"/>
-                <field name="nombre_del_solicitante" string="Nombre del solicitante " attrs="{}" required="1"/>
+                <field name="clinica_solicitante" string="Área solicitante" attrs="{}" required="0"/>
+                <field name="nombre_del_solicitante" string="Nombre del solicitante " attrs="{}" required="0"/>
                 <field name="create_uid" string="Creador" readonly="0"/>
             </xpath>
             </field> 
