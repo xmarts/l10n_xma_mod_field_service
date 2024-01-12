@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 from datetime import timedelta
 from itertools import groupby
 from markupsafe import Markup
@@ -116,21 +116,21 @@ class helpdeskTicket(models.Model):
          ('DELIVERY CAS', 'DELIVERY CAS'),
          ('DESPACHO', 'DESPACHO')],
         string="Área solicitante")
-    birthdate = fields.Date(string="Fecha de nacimiento", store=True, related="partner_id.patient_birthday")
-    dpi_number = fields.Char(string="DPI", store=True, related="partner_id.dpi_number")
-    phone = fields.Char(string="Teléfono", store=True, related="partner_id.phone")
-    email = fields.Char(string="Correo Electrónico", store=True, related="partner_id.email")
+    birthdate = fields.Date(string="Fecha de nacimiento", store=True)
+    dpi_number = fields.Char(string="DPI", store=True)
+    phone = fields.Char(string="Teléfono", store=True)
+    email = fields.Char(string="Correo Electrónico", store=True)
     ticket_number = fields.Char(string="Boleta/Token", store=True)
     bluemeds_id = fields.Char(string="Personal ID (Bluemeds)")
     welcome_bluemeds = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Requiere kit de bienvenida (Bluemeds)") 
-    no_affilition = fields.Char(string="Afiliación", related="partner_id.afiliation_id", store=True)
+    no_affilition = fields.Char(string="Afiliación")
     no_carnet = fields.Char(string="Núm. de carnet de seguro")
     doctor_internal = fields.Char(string="Doctor interno")
     doctor_external = fields.Char(string="Doctor Externo")
     form = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Cuenta con formulario de autorización") 
     prescription = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Cuenta con receta medica") 
     telemedicine = fields.Selection([('Si', 'Si'), ('No', 'No')], string="Telemedicina") 
-    phone2 = fields.Char(string="Teléfono 2", related="partner_id.mobile")
+    phone2 = fields.Char(string="Teléfono 2")
     amount = fields.Float(string="Total de la factura")
     street_dispach = fields.Char(string="Dirección de despacho")
     who_receives = fields.Char(string="Nombre de quien recibe")
@@ -144,10 +144,10 @@ class helpdeskTicket(models.Model):
         ('Cancelado', 'Cancelado'),
         ('Solo para asignar NO UTILIZAR','Solo para asignar NO UTILIZAR')
     ], string="Forma de Pago")
-    department_id = fields.Many2one("res.country.state", string="Departamento", related="partner_id.state_id")
+    department_id = fields.Many2one("res.country.state", string="Departamento")
     municipality_id = fields.Many2one("res.country.municipality", string="Municipio")
     zone = fields.Char(string="Zona", store=True)
-    vat = fields.Char(string="NIT para facturación", store=True, related="partner_id.vat")
+    vat = fields.Char(string="NIT para facturación", store=True)
     name_to_invoice = fields.Char(string="Nombre de a quien se factura")
     street_to_invoice = fields.Char(string="Dirección de facturación")
     amount_change = fields.Char(string="Pago efectivo, especificar si necesita vuelto")

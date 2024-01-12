@@ -8,55 +8,6 @@
             <field name="arch" type="xml">
                <xpath expr="//form[1]/sheet[1]/div[not(@name)][2]" position="replace">
                     <group name="grupo1">
-                      
-                <group name="info_per" string="Información Personal">
-                    <field name="birthdate" string="Fecha de nacimiento" readonly="0"/>
-                    <field name="dpi_number" string="DPI:" readonly="0"/>
-                    <field name="phone" string="Teléfono" readonly="0" required="0"/>
-                    <field name="phone2" string="Teléfono 2"/>
-                    <field name="email" string="Correo Electrónico "/>
-                </group>
-                <group name="identificacion" string="Identificación">
-                    <field name="ticket_number" string="Boleta/token" attrs="{}" required="0"/>
-                    <field name="bluemeds_id" string="Personal ID (Bluemeds)"/>
-                </group>
-                <group name="afiliacion" string="Afiliciación">
-                    <field name="welcome_bluemeds" string="Requiere kit de bienvenida (Bluemeds)"/>
-                    <field name="no_affilition" string="Afiliación"/>
-                    <field name="no_carnet" string=" Núm. de carnet de seguro"/>
-                    <field name="insurance_carrier_id" string="Seguros" readonly="0"/>
-                </group>
-                <group name="serv_med" string="Servicio Médico">
-                    <field name="doctor_internal" string="Doctor Interno "/>
-                    <field name="doctor_external" string="Doctor Externo"/>
-                    <field name="form" string="Cuenta con formulario de autorización"/>
-                    <field name="prescription" string="Cuenta con receta medica"/>
-                    <field name="telemedicine" string="Telemedicina"/>
-                </group>
-                <group name="info_fact" string="Información de Facturación">
-                    <field name="name_to_invoice" string="Nombre de a quien se factura"/>
-                    <field name="street_to_invoice" string="Dirección de facturación"/>
-                    <field name="vat" string="NIT para facturación" readonly="0"/>
-                    <field name="payment_way" string="Forma de Pago" attrs="{}" required="0"/>
-                    <field name="amount" string="Total de la factura " attrs="{}" required="0"/>
-                    <field name="amount_change" string="Pago efectivo, especificar si necesita vuelto" attrs="{}" required="0"/>
-                </group>
-                <group name="envio" string="Entrega y Envío">
-                    <field name="street_dispach" string="Dirección de despacho" widget="char"/>
-                    <field name="zone" string="Zona" readonly="0"/>
-                    <field name="municipality_id" string="Municipio" attrs="{}" required="0"/>
-                    <field name="department_id" domain="[[&quot;country_id.name&quot;,&quot;=&quot;,&quot;Guatemala&quot;]]" attrs="{}" required="0" string="Departamento"/>
-                    <field name="who_receives" string="Nombre de quien recibe"/>
-                    <field name="general_delivery_remarks" string="Observaciones generales para entrega"/>
-                    <field name="assigned_today" string="Asignado para hoy"/>
-                    <field name="date_delivery" string="Fecha solicitada de entrega"/>
-                </group>
-                <group name="info_adic" string="Información Adicional">
-                    <field name="ref_sale" string="Volver a la venta" widget="sale_order_many2one" readonly="1"/>
-                    <field name="clinica_solicitante" string="Área solicitante" attrs="{}" required="0"/>
-                    <field name="nombre_del_solicitante" string="Nombre del solicitante " attrs="{}" required="0"/>
-                    <field name="create_uid" string="Creador" readonly="0"/>
-                </group>
                         <group name="grupo1-2" string="USO EXCLUSIVO BLUMEDS">
                             <field name="order_id" string="Orden ID"/>
                             <field name="type_order" string="Tipo de orden "/>
@@ -71,6 +22,12 @@
             <xpath expr="//field[@name='sla_status_ids']" position="replace"/>
             <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='user_id']" position="after">
                 <xpath expr="//field[@name='partner_id']" position="move"/>
+                <field name="birthdate" string="Fecha de nacimiento" readonly="0"/>
+                <field name="dpi_number" string="DPI:" readonly="0"/>
+                <field name="phone" string="Teléfono" readonly="0" required="1"/>
+                <field name="phone2" string="Teléfono 2"/>
+                <field name="email" string="Correo Electrónico "/>
+                <field name="ticket_number" string="Boleta/token" attrs="{}" required="1"/>
             </xpath>
             <xpath expr="//field[@name='priority']" position="attributes">
                 <attribute name="attrs">{}</attribute>
@@ -84,6 +41,22 @@
                 <attribute name="attrs">{}</attribute>
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//field[@name='partner_id']" position="replace">
+                <field name="partner_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="ticket_number" string="Boleta / Token" attrs="{}" invisible="1"/>
+                <field name="bluemeds_id" string="Personal ID (Bluemeds)"/>
+                <field name="welcome_bluemeds" string="Requiere kit de bienvenida (Bluemeds)"/>
+                <field name="no_affilition" string="Afiliación"/>
+                <field name="no_carnet" string=" Núm. de carnet de seguro"/>
+                <field name="insurance_carrier_id" string="Seguros" readonly="0"/>
+                <field name="doctor_internal" string="Doctor Interno "/>
+                <field name="doctor_external" string="Doctor Externo"/>
+                <field name="form" string="Cuenta con formulario de autorización"/>
+                <field name="prescription" string="Cuenta con receta medica"/>
+                <field name="telemedicine" string="Telemedicina"/>
+            </xpath>
             <xpath expr="//field[@name='partner_email']" position="attributes">
                 <attribute name="attrs">{}</attribute>
                 <attribute name="invisible">1</attribute>
@@ -92,12 +65,26 @@
                 <attribute name="attrs">{}</attribute>
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/div[2]" position="after"/>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='company_id']" position="replace"/>
-              <xpath expr="//form[1]/sheet[1]/group[1]/group[1]" position="attributes">
-                <attribute name="string">INFORMACIÓN GENERAL</attribute>
-              </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/div[2]" position="after">
+                <field name="vat" string="NIT para facturación" readonly="0"/>
+                <field name="name_to_invoice" string="Nombre de a quien se factura"/>
+                <field name="street_to_invoice" string="Dirección de facturación"/>
+                <field name="payment_way" string="Forma de Pago" attrs="{}" required="1"/>
+                <field name="amount" string="Total de la factura " attrs="{}" required="1"/>
+                <field name="amount_change" string="Pago efectivo, especificar si necesita vuelto" attrs="{}" required="1"/>
+                <field name="street_dispach" string="Dirección de despacho" widget="char"/>
+                <field name="zone" string="Zona" readonly="0"/>
+                <field name="municipality_id" string="Municipio" attrs="{}" required="1"/>
+                <field name="department_id" domain="[[&quot;country_id.name&quot;,&quot;=&quot;,&quot;Guatemala&quot;]]" attrs="{}" required="1" string="Departamento"/>
+                <field name="who_receives" string="Nombre de quien recibe"/>
+                <field name="general_delivery_remarks" string="Observaciones generales para entrega"/>
+                <field name="assigned_today" string="Asignado para hoy"/>
+                <field name="date_delivery" string="Fecha solicitada de entrega"/>
+                <field name="clinica_solicitante" string="Área solicitante" attrs="{}" required="1"/>
+                <field name="nombre_del_solicitante" string="Nombre del solicitante " attrs="{}" required="1"/>
+                <field name="create_uid" string="Creador" readonly="0"/>
+            </xpath>
             </field> 
         </record>
     </data>
-</odoo> 
+</odoo>
