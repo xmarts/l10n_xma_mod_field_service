@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Mantenimiento de municipios -->
+        <record id="municipality_tree_view" model="ir.ui.view">
+            <field name="name">municipality.type.tree.view</field>
+            <field name="model">res.country.municipality</field>
+                <field name="arch" type="xml">
+                    <tree>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="state_id"/>
+                    </tree>
+                </field>
+        </record>
+
+        <record id="municipality_action" model="ir.actions.act_window">
+            <field name="name">Municipios</field>
+            <field name="res_model">res.country.municipality</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="municipality_tree_view"/>
+        </record>
+
+        <menuitem id="menu_consumed_type" 
+            name="Municipios" 
+            parent="contacts.menu_localisation" 
+            action="municipality_action" 
+            sequence="3"
+        />
+        <!-- Ticket -->
         <record id="inherit_view_helpdesk_ticket_form" model="ir.ui.view">
             <field name="name">inherit.view.helpdesk.ticket.form</field>
             <field name="model">helpdesk.ticket</field>
