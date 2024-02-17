@@ -114,8 +114,9 @@ class helpdeskTicket(models.Model):
          ('SAN CRISTOBAL', 'SAN CRISTOBAL'),
          ('BLUEMEDS', 'BLUEMEDS'),
          ('DELIVERY CAS', 'DELIVERY CAS'),
-         ('DESPACHO', 'DESPACHO')],
-        string="Área solicitante")
+         ('DESPACHO', 'DESPACHO'),
+         ('VISTA HERMOSA', 'VISTA HERMOSA'),
+         ('MAJADAS ONCE', 'MAJADAS ONCE')], string="Área solicitante")
     birthdate = fields.Date(string="Fecha de nacimiento", store=True)
     dpi_number = fields.Char(string="DPI", store=True)
     phone = fields.Char(string="Teléfono", store=True)
