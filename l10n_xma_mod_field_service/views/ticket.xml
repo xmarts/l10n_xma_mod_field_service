@@ -42,6 +42,7 @@
                             <field name="amount_total_invoice" string="Monto total Orden "/>
                             <field name="amount_total_paid" string="Monto total cobrado"/>
                             <field name="assigned_priority" string="Asignación prioritaria en clínica"/>
+                            <field name="programmed"/>
                         </group>
                     </group>
                 </xpath>
