@@ -158,6 +158,7 @@ class helpdeskTicket(models.Model):
     amount_total_invoice = fields.Float(string="Monto total Orden")
     amount_total_paid = fields.Float(string="Monto total cobrado")
     assigned_priority = fields.Selection([('Prioridad para cabina de seguros', 'Prioridad para cabina de seguros')], string="Asignación prioritaria en clínica")
+    programmed = fields.Selection([('si', 'Si'), ('no', 'No')], string="Programado") 
 
     def write(self, vals):
         teams = super(helpdeskTicket, self).write(vals)
@@ -325,6 +326,7 @@ class helpdeskTimeline(models.Model):
                                 ('No', 'No'),
                                 ])
     fecha_entrega= fields.Date()
+    programmed = fields.Selection(related="timeline_help_id.programmed") 
 
 
 class projectTimeline(models.Model):

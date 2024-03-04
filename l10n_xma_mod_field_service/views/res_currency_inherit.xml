@@ -66,6 +66,7 @@
                     <field name="create_uid" invisible="0"/>
                     <field name="write_date"/>
                     <field name="team_id" invisible="0"/>
+                    <field name="programmed" invisible="0"/>
                     <field name="dpi" invisible="0"/>
                     <field name="telefono" invisible="0"/>
                     <field name="telefono2" invisible="0"/>
