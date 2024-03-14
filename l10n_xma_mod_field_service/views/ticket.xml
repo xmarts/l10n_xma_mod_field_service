@@ -39,7 +39,7 @@
                         <group name="grupo1-2" string="USO EXCLUSIVO BLUMEDS">
                             <field name="order_id" string="Orden ID"/>
                             <field name="type_order" string="Tipo de orden "/>
-                            <field name="num_order" string="Número de voucher"/>
+                            <field name="num_voucher" string="Número de voucher"/>
                             <field name="amount_total_invoice" string="Monto total Orden "/>
                             <field name="amount_total_paid" string="Monto total cobrado"/>
                             <field name="assigned_priority" string="Asignación prioritaria en clínica"/>
