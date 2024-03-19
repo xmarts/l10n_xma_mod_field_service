@@ -155,6 +155,7 @@ class helpdeskTicket(models.Model):
     cc_email = fields.Char(string="CC del correo electrónico")
     order_id = fields.Char(string="Orden ID")
     type_order = fields.Selection([('Supervisar', 'Supervisar'), ('Cobros en cola', 'Cobros en cola')], string="Tipo de orden")
+    num_voucher = fields.Char('Número de voucher')
     amount_total_invoice = fields.Float(string="Monto total Orden")
     amount_total_paid = fields.Float(string="Monto total cobrado")
     assigned_priority = fields.Selection([('Prioridad para cabina de seguros', 'Prioridad para cabina de seguros')], string="Asignación prioritaria en clínica")
