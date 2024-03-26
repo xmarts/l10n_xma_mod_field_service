@@ -104,6 +104,7 @@ class helpdeskTicket(models.Model):
     team_old = fields.Char()
     insurance_carrier_id = fields.Many2one('xmart.hospital', string="Aseguradora", store=True)
     nombre_del_solicitante = fields.Char(string="Nombre de solicitante")
+    is_birthday = fields.Selection([('si', 'Si'), ('no', 'No'),], string="Cumpleañero")
     clinica_solicitante = fields.Selection(
         [('CONDADO', 'CONDADO'),
          ('MAJADAS', 'MAJADAS'),
@@ -307,10 +308,7 @@ class helpdeskTimeline(models.Model):
     dir_despacho = fields.Char()
     quien_recibe = fields.Char()
     observaciones = fields.Char()
-    asignado = fields.Selection([
-                                ('Si', 'Si'),
-                                ('No', 'No'),
-                                ])
+    asignado = fields.Selection([('Si', 'Si'), ('No', 'No'),])
     fecha_entrega= fields.Date()
     programmed = fields.Selection(related="timeline_help_id.programmed") 
 
